@@ -1,5 +1,7 @@
 //! A libfuzzer-like fuzzer with llmp-multithreading support and restarts
 //! The example harness is built for `stb_image`.
+use env_logger::Env;
+
 use mimalloc::MiMalloc;
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;
@@ -14,6 +16,9 @@ pub fn main() {
     // Registry the metadata types used in this fuzzer
     // Needed only on no_std
     //RegistryBuilder::register::<Tokens>();
+
+    // Enable INFO log leve
+    env_logger::Builder::from_env(Env::default().default_filter_or("info")).init();
 
     println!(
         "Workdir: {:?}",
